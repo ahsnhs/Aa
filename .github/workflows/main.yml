@@ -1,0 +1,23 @@
+name: Unzip tor.zip
+
+on: [push]
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Unzip tor.zip
+      run: |
+        sudo apt-get install -y unzip
+        unzip -o tor.zip -d extracted_files/
+      
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add extracted_files/
+        git commit -m 'Unzipped tor.zip'
+        git push
